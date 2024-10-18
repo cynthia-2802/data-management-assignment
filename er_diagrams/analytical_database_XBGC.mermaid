@@ -1,0 +1,29 @@
+erDiagram
+    session_fact {
+        INT session_id PK
+        INT member_id FK
+        INT game_type_id FK
+        TIMESTAMP start_time
+        TIMESTAMP end_time
+        DECIMAL duration_hours
+        DECIMAL amount_due
+        BOOLEAN is_member
+    }
+    members_dim {
+        INT member_id PK
+        VARCHAR(50) first_name
+        VARCHAR(50) last_name
+        INT member_type_id FK
+        VARCHAR(100) country_id
+    }
+    member_type_dim {
+        INT member_type_id PK
+        VARCHAR(50) member_type_name
+    }
+    game_types_dim {
+        INT game_type_id PK
+        VARCHAR(50) game_type_name
+    }
+    session_fact }o--|| members_dim : ""
+    session_fact }o--|| game_types_dim : ""
+    members_dim }o--|| member_type_dim : ""

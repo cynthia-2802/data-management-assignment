@@ -1,0 +1,32 @@
+erDiagram
+    sessions {
+        INT session_id PK
+        INT member_id FK
+        INT game_type_id FK
+        TIMESTAMP start_time
+        TIMESTAMP end_time
+        DECIMAL amount_due
+    }
+    members {
+        INT member_id PK
+        VARCHAR(50) first_name
+        VARCHAR(50) last_name
+        INT member_type_id FK
+        INT country_id FK
+    }
+    countries {
+        INT country_id PK
+        VARCHAR(100) country_name
+    }
+    member_types {
+        INT member_type_id PK
+        VARCHAR(50) member_type_name
+    }
+    game_types {
+        INT game_type_id PK
+        VARCHAR(50) game_type_name
+    }
+    sessions }o--|| members : ""
+    sessions }o--|| game_types : ""
+    members }o--|| member_types : ""
+    members }o--|| countries : ""

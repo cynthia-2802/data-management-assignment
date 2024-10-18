@@ -1,0 +1,87 @@
+erDiagram
+    lawyer {
+        INT lawyer_id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        DATE date_of_birth
+        VARCHAR email
+        VARCHAR phone_number
+    }
+    qualification {
+        INT qualification_id PK
+        VARCHAR qualification_name
+    }
+    lawyer_qualification {
+        INT lawyer_qualification_id PK
+        INT lawyer_id FK
+        INT qualification_id FK
+    }
+    lawyer ||--o{ lawyer_qualification : "has qualification"
+    qualification ||--o{ lawyer_qualification : "is held by lawyer"
+
+    case_type {
+        INT case_type_id PK
+        VARCHAR case_type_name
+        DECIMAL fixed_price
+    }
+    lawyer_expertise {
+        INT lawyer_expertise_id PK
+        INT lawyer_id FK
+        INT case_type_id FK
+    }
+    lawyer ||--o{ lawyer_expertise : "has expertise"
+    case_type ||--o{ lawyer_expertise : "is expertise in"
+
+    client {
+        INT client_id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        DATE date_of_birth
+        VARCHAR country
+        VARCHAR email
+        VARCHAR phone_number
+    }
+    law_case {
+        INT case_id PK
+        INT client_id FK
+        INT case_type_id FK
+        DATE start_date
+        DATE end_date
+        TEXT case_details
+    }
+    client ||--o{ law_case : "has case"
+    case_type ||--o{ law_case : "is of type"
+
+    lawyer_case_assignment {
+        INT assignment_id PK
+        INT case_id FK
+        INT lawyer_id FK
+        VARCHAR role
+    }
+    lawyer ||--o{ lawyer_case_assignment : "assigned to case"
+    law_case ||--o{ lawyer_case_assignment : "has assignment"
+
+    meeting_room {
+        INT room_id PK
+        VARCHAR room_name
+    }
+    meeting {
+        INT meeting_id PK
+        INT case_id FK
+        INT room_id FK
+        TIMESTAMP start_datetime
+        TIMESTAMP end_datetime
+        VARCHAR purpose
+    }
+    law_case ||--o{ meeting : "has meeting"
+    meeting_room ||--o{ meeting : "hosts meeting"
+
+    meeting_attendee {
+        INT meeting_attendee_id PK
+        INT meeting_id FK
+        INT attendee_id FK
+        VARCHAR attendee_type
+    }
+    meeting ||--o{ meeting_attendee : "has attendee"
+    lawyer ||--o{ meeting_attendee : "attends meeting"
+    client ||--o{ meeting_attendee : "attends meeting"
